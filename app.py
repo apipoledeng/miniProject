@@ -1,11 +1,21 @@
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+import requests
+
+from pymongo import MongoClient
+from bs4 import BeautifulSoup
 from http import client
 from flask import Flask, render_template, request, jsonify, redirect
-from pymongo import MongoClient
-import requests
-from bs4 import BeautifulSoup
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
-client = MongoClient("mongodb+srv://kentang:eUenw9z4QIlEoGzW@cluster0.mjce1r3.mongodb.net/?retryWrites=true&w=majority")
-db = client.dbsparta
+
+MONGODB_URI = os.environ.get("MONGODB_URI")
+DB_NAME =  os.environ.get("DB_NAME")
+
+client = MongoClient(MONGODB_URI)
+db = client[DB_NAME]
 
 app = Flask(__name__)
 
